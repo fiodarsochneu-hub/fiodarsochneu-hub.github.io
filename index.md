@@ -12,7 +12,7 @@ title: Экономика
 # 📖 Госзакупки - коррупция 
 
 
-# Контакты    [facebook](https://www.facebook.com/profile.php?id=100087457504302)
+# Контакты:    [facebook](https://www.facebook.com/profile.php?id=100087457504302)
 * ### [facebook](https://www.facebook.com/profile.php?id=100087457504302)
 
 
