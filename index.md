@@ -11,7 +11,7 @@ title: Экономика
 * ## [Разделить чистые и грязные деньги](docs/separate-clean-money-from-dirty-money.html)
 ### 📖 Госзакупки - коррупция 
  ## [Как обустроить государственные закупки](docs/how-to-organize-public-procurement.html)
-* ## [Как обустроить государственные закупки](how-to-organize-public-procurement.html)
+
 
 
 ***
