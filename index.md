@@ -10,5 +10,5 @@ title: Экономика
     * #### [Тринадцать лет спустя](docs/thirteen-years-later.html)
 * ### [Разделить чистые и грязные деньги](docs/separate-clean-money-from-dirty-money.html)
 
-# 📖 Публикации
-* ### https://www.facebook.com/profile.php?id=100087457504302
+# 📖 Контакты
+* ### [facebook](https://www.facebook.com/profile.php?id=100087457504302)
