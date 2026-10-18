@@ -10,7 +10,7 @@ title: Экономика
   *  #### [Тринадцать лет спустя](docs/thirteen-years-later.html)
 * ## [Разделить чистые и грязные деньги](docs/separate-clean-money-from-dirty-money.html)
 ### 📖 Госзакупки - коррупция 
- ## [Как обустроить государственные закупки](docs/how-to-organize-public-procurement.html)
+* # [КАК ОБУСТРОИТЬ ГОСУДАРСТВЕННЫЕ ЗАКУПКИ](docs/how-to-organize-public-procurement.html)
 
 
 
