@@ -11,3 +11,4 @@ title: Экономика
 * ### [Разделить чистые и грязные деньги](docs/separate-clean-money-from-dirty-money.html)
 
 # 📖 Публикации
+* ### https://www.facebook.com/profile.php?id=100087457504302
