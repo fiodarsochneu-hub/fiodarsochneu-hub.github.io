@@ -3,7 +3,7 @@ layout: default
 title: Экономика
 ---
 
-### 📖 Публикации
+### 📖 Экономика
 
 * ## [КАК НАМ ОБУСТРОИТЬ ЭКОНОМИКУ — ретро](docs/how-arrange-our-economy.html)
 * ### [КАК РАЗРУШИТЬ ЭКОНОМИКУ?](docs/how-to-destroy-an-economy.html)
