@@ -30,7 +30,7 @@ title: Экономика
 ### ✍ Новые записи в блоге (Общие)
 <ul>
   {% for post in site.posts %}
-    {% if post.categories == empty or post.categories == nil %}
+    {% unless post.categories contains 'econom' or post.categories contains 'games' %}
           <li><strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
     {% endunless %}
   {% endfor %}
