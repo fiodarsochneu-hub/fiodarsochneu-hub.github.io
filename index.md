@@ -27,7 +27,21 @@ title: Экономика
 ***
 ### Контакты:    [facebook](https://www.facebook.com/profile.php?id=100087457504302)
 
+### 📖 Экономика
+<ul>
+  {% for post in site.categories.econom %}
+    <li><strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+
 ### 🃏 Игры (Покер, Шахматы)
+<ul>
+  {% for post in site.categories.games %}
+    <li><strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+
+### 🃏 Игры
 <ul>
   {% for post in site.categories.games %}
     <li><strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
