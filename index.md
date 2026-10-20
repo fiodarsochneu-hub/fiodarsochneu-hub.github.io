@@ -9,7 +9,7 @@ title: Экономика
 * ### [КАК РАЗРУШИТЬ ЭКОНОМИКУ?](docs/how-to-destroy-an-economy.html)
   *  #### [Тринадцать лет спустя](docs/thirteen-years-later.html)
 * ## [Разделить чистые и грязные деньги](docs/separate-clean-money-from-dirty-money.html)
-### 📖 Госзакупки - коррупция 
+
 * # [КАК ОБУСТРОИТЬ ГОСУДАРСТВЕННЫЕ ЗАКУПКИ](docs/how-to-organize-public-procurement.html)
 
 ***
