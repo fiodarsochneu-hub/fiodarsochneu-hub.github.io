@@ -5,7 +5,7 @@ layout: post
 
 title: "Тест"
 
-categories: games
+categories: [games]
 
 ---
 Покер
