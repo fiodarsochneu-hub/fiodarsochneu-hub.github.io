@@ -12,10 +12,17 @@ title: Экономика
 ### 📖 Госзакупки - коррупция 
 * # [КАК ОБУСТРОИТЬ ГОСУДАРСТВЕННЫЕ ЗАКУПКИ](docs/how-to-organize-public-procurement.html)
 
+***
 
+### ✍️ Новые записи в блоге
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — 
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
 
 ***
 ### Контакты:    [facebook](https://www.facebook.com/profile.php?id=100087457504302)
-
-:smile: 
-
