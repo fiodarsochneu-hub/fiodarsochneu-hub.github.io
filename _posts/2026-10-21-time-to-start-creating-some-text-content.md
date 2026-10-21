@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: pdefault
 title: "Надо уже создавать какой-то текстовый контенкт"
 ---
 
