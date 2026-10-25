@@ -48,13 +48,21 @@ title: Экономика
 
 
  ***
- ### 🃏 Игры
+ ### 🃏 Архив (Игры)
 <ul>
-  {% for post in site.categories.games %}
-    <li><strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
-    {% else %}
-    <li>Пока нет записей в играх.</li>
+  {% assign has_games = false %}
+  {% for post in site.posts %}
+    {% if post.path contains "_posts/games/" %}
+      {% assign has_games = true %}
+      <li>
+        <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </li>
+    {% endif %}
   {% endfor %}
+  
+  {% if has_games == false %}
+    <li>Пока нет записей в играх.</li>
+  {% endif %}
 </ul>
  ***
 ### Контакты:    [facebook](https://www.facebook.com/profile.php?id=100087457504302)
