@@ -27,17 +27,19 @@ title: Economy
 {% if site.posts.size > 3 %}
 <details style="margin-top: 15px; cursor: pointer;">
   <summary style="font-weight: bold; color: #0066cc;">📂 Показать более старые общие записи...</summary>
-  <div style="margin-top: 10px;">
+  <ul style="margin-top: 10px; list-style-type: disc; padding-left: 20px;">
 {% assign skip_count = 0 %}
 {% for post in site.posts %}
   {% unless post.path contains "_posts/games/" %}
     {% assign skip_count = skip_count | plus: 1 %}
     {% if skip_count > 3 %}
-* **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
+    <li style="margin-bottom: 5px;">
+      <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </li>
     {% endif %}
   {% endunless %}
 {% endfor %}
-  </div>
+  </ul>
 </details>
 {% endif %}
 
