@@ -14,9 +14,7 @@ title: Экономика
 
 ### ✍️ Новые записи в блоге (Общие)
 <ul>
-  {% assign general_posts = site.posts | where_exp: "item", "item.categories.size == 0" %}
-  {% for post in general_posts limit: 3 %}
-  {% for post in site.posts %}
+    {% for post in site.posts %}
     {% if post.categories.size == 0 %}
       <li><strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
      <p>{{ post.excerpt }}</p>
