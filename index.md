@@ -17,9 +17,11 @@ title: Экономика
    {% assign count = 0 %}
     {% for post in site.posts %}
     {% if post.categories.size == 0 %}
-      <li><strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
-     <p>{{ post.excerpt }}</p>
-     {% endif %}
+      <li>
+       <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <p>{{ post.excerpt }}</p>   
+      </li>
+        {% endif %}
        {% endfor %}
 </ul>
 
