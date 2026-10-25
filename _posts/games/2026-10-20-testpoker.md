@@ -1,10 +1,6 @@
 ---
-
-layout: post
-
+layout: default
 title: "Тест"
-
 categories: [games]
-
 ---
 Покер
