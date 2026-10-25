@@ -4,7 +4,7 @@ layout: post
 
 title: "Покер"
 
-categories: [games]
+categories: games
 
 ---
 
