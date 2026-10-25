@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Экономика
+title: Economy
 ---
 
 * ## [КАК НАМ ОБУСТРОИТЬ ЭКОНОМИКУ — ретро](docs/how-arrange-our-economy.html)
@@ -13,57 +13,50 @@ title: Экономика
 ***
 
 ### ✍️ Новые записи в блоге (Общие)
-<ul>
-   {% assign count = 0 %}
-    {% for post in site.posts %}
-    {% if post.categories.size == 0 %}
-      <li>
-       <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <p>{{ post.excerpt }}</p>   
-      </li>
-     {% assign count = count | plus: 1 %}
-      {% if count == 3 %}{% break %}{% endif %}
-        {% endif %}
-       {% endfor %}
-</ul>
+
+{% assign count = 0 %}
+{% for post in site.posts %}
+  {% unless post.path contains "_posts/games/" %}
+* **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
+  {{ post.excerpt }}
+    {% assign count = count | plus: 1 %}
+    {% if count == 3 %}{% break %}{% endif %}
+  {% endunless %}
+{% endfor %}
 
 {% if site.posts.size > 3 %}
 <details style="margin-top: 15px; cursor: pointer;">
-  <summary style="font-weight: bold; color: #0066cc;">📂 Показать более старые записи...</summary>
-  <ul style="margin-top: 10px;">
-    {% assign skip_count = 0 %}
-    {% for post in site.posts %}
-      {% if post.categories.size == 0 %}
-        {% assign skip_count = skip_count | plus: 1 %}
-        {% if skip_count > 3 %}
-          <li>
-            <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          </li>
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-  </ul>
+  <summary style="font-weight: bold; color: #0066cc;">📂 Показать более старые общие записи...</summary>
+  <div style="margin-top: 10px;">
+{% assign skip_count = 0 %}
+{% for post in site.posts %}
+  {% unless post.path contains "_posts/games/" %}
+    {% assign skip_count = skip_count | plus: 1 %}
+    {% if skip_count > 3 %}
+* **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
+    {% endif %}
+  {% endunless %}
+{% endfor %}
+  </div>
 </details>
 {% endif %}
 
+***
 
- ***
- ## Архив (Игры)
-<ul>
-  {% assign has_games = false %}
-  {% for post in site.posts %}
-    {% if post.path contains "_posts/games/" %}
-      {% assign has_games = true %}
-      <li>
-        <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      </li>
-    {% endif %}
-  {% endfor %}
-  
-  {% if has_games == false %}
-    <li>Пока нет записей в играх.</li>
+### 🃏 Архив (Игры)
+
+{% assign has_games = false %}
+{% for post in site.posts %}
+  {% if post.path contains "_posts/games/" %}
+    {% assign has_games = true %}
+* **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
   {% endif %}
-</ul>
- ***
-### Контакты:    [facebook](https://www.facebook.com/profile.php?id=100087457504302)
+{% endfor %}
 
+{% if has_games == false %}
+* Пока нет записей в играх.
+{% endif %}
+
+***
+
+### Контакты: [facebook](https://facebook.com)
