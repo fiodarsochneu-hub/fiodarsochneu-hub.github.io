@@ -48,7 +48,7 @@ title: Экономика
 
 
  ***
- ## 🃏 Архив (Игры)
+ ## Архив (Игры)
 <ul>
   {% assign has_games = false %}
   {% for post in site.posts %}
