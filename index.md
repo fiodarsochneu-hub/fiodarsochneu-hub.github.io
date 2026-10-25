@@ -27,6 +27,25 @@ title: Экономика
        {% endfor %}
 </ul>
 
+{% if site.posts.size > 3 %}
+<details style="margin-top: 15px; cursor: pointer;">
+  <summary style="font-weight: bold; color: #0066cc;">📂 Показать более старые записи...</summary>
+  <ul style="margin-top: 10px;">
+    {% assign skip_count = 0 %}
+    {% for post in site.posts %}
+      {% if post.categories.size == 0 %}
+        {% assign skip_count = skip_count | plus: 1 %}
+        {% if skip_count > 3 %}
+          <li>
+            <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+</details>
+{% endif %}
+
 
  ***
  ### 🃏 Архив
