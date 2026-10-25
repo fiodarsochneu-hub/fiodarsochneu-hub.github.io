@@ -21,6 +21,8 @@ title: Экономика
        <strong>{{ post.date | date: "%d.%m.%Y" }}</strong> — <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
       <p>{{ post.excerpt }}</p>   
       </li>
+     {% assign count = count | plus: 1 %}
+      {% if count == 3 %}{% break %}{% endif %}
         {% endif %}
        {% endfor %}
 </ul>
