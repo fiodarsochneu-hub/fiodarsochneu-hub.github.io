@@ -58,7 +58,7 @@ title: Economy
 {% endif %}
 ***
 
-### 🃏 Другие тематики 
+### Другие тематики 
 {% assign has_games = false %}
 {% for post in site.posts %}
   {% if post.path contains "_posts/games/" %}
