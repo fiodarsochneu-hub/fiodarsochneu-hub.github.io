@@ -1,1 +1,6 @@
+---
+layout:	default
+title:	"Экономика"
+categories: economy
+---
 Текст по коррупции 
