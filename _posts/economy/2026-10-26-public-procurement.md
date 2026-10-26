@@ -1,6 +1,6 @@
 ---
 layout:	default
-title:	"Экономика"
+title:	"Государственные закупки"
 categories: economy
 ---
 Текст по государственным закупкам 
