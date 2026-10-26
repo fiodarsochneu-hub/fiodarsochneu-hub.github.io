@@ -31,6 +31,7 @@ title: Economy
 {% assign skip_count = 0 %}
 {% for post in site.posts %}
   {% unless post.path contains "_posts/games/" %}
+                                     {% unless post.path contains "_posts/economy/" %}
     {% assign skip_count = skip_count | plus: 1 %}
     {% if skip_count > 3 %}
     <li style="margin-bottom: 5px;">
