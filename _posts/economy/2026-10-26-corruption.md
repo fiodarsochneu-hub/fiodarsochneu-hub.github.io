@@ -1,6 +1,6 @@
 ---
 layout:	default
-title:	"Экономика"
+title:	"Коррупция"
 categories: economy
 ---
 Текст по коррупции 
