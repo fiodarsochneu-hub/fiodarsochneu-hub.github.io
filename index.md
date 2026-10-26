@@ -45,7 +45,7 @@ title: Economy
 
 ***
 
-### 🃏 Тематический
+### 🃏 Другие тематики 
 
 {% assign has_games = false %}
 {% for post in site.posts %}
@@ -60,7 +60,7 @@ title: Economy
 {% endif %}
 
 ***
-### Экономика
+### Экономика Госзакупки Коррупция
 
 {% assign has_economy = false %}
 {% for post in site.posts %}
