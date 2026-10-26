@@ -42,26 +42,9 @@ title: Economy
   </ul>
 </details>
 {% endif %}
-
 ***
 
-### 🃏 Другие тематики 
-
-{% assign has_games = false %}
-{% for post in site.posts %}
-  {% if post.path contains "_posts/games/" %}
-    {% assign has_games = true %}
-* **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
-  {% endif %}
-{% endfor %}
-
-{% if has_games == false %}
-* Пока нет записей в играх.
-{% endif %}
-
-***
 ### Экономика Госзакупки Коррупция
-
 {% assign has_economy = false %}
 {% for post in site.posts %}
   {% if post.path contains "_posts/economy/" %}
@@ -73,7 +56,21 @@ title: Economy
 {% if has_economy == false %}
 * Пока нет записей в играх.
 {% endif %}
-
 ***
+
+### 🃏 Другие тематики 
+{% assign has_games = false %}
+{% for post in site.posts %}
+  {% if post.path contains "_posts/games/" %}
+    {% assign has_games = true %}
+* **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
+  {% endif %}
+{% endfor %}
+
+{% if has_games == false %}
+* Пока нет записей в играх.
+{% endif %}
+***
+
 
 ### Контакты: [facebook](https://facebook.com)
