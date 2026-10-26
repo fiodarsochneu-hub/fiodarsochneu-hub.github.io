@@ -60,5 +60,20 @@ title: Economy
 {% endif %}
 
 ***
+### Экономика
+
+{% assign has_economy = false %}
+{% for post in site.posts %}
+  {% if post.path contains "_posts/economy/" %}
+    {% assign has_economy = true %}
+* **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
+  {% endif %}
+{% endfor %}
+
+{% if has_economy == false %}
+* Пока нет записей в играх.
+{% endif %}
+
+***
 
 ### Контакты: [facebook](https://facebook.com)
