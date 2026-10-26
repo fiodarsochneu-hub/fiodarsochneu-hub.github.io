@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Тест"
+title: "История"
 categories: [games]
 ---
-Покер
+Текст по истории
