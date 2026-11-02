@@ -17,3 +17,5 @@ title: "Октябрь - итоги"
 <a href="/assets/october.jpg" target="_blank">
   <img src="/assets/october.jpg" alt="Посмотреть фото" width="50%">
 </a>
+
+[![Посмотреть фото](/assets/october.jpg)](/assets/october.jpg){: width="50%"}
