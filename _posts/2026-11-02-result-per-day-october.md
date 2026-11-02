@@ -7,4 +7,5 @@ title: "Октябрь"
 
 [/assets/october.jpg](/assets/october.jpg)
 
+Работает, если стоит одна, со слов ИИ
 <a href="/assets/october.jpg" target="_blank">Посмотреть фото</a>
