@@ -13,3 +13,7 @@ title: "Октябрь - итоги"
 <div style="width: 20%;">
   <a href="/assets/october.jpg" target="_blank">Посмотреть фото</a>
 </div>
+
+<a href="/assets/october.jpg" target="_blank">
+  <img src="/assets/october.jpg" alt="Посмотреть фото" width="50%">
+</a>
