@@ -18,4 +18,4 @@ title: "Октябрь - итоги"
   <img src="/assets/october.jpg" alt="Посмотреть фото" width="50%">
 </a>
 
-[![Посмотреть фото](/assets/october.jpg)](/assets/october.jpg){: width="50%"}
+[[Посмотреть фото](/assets/october.jpg)](/assets/october.jpg){: width="50%"}
