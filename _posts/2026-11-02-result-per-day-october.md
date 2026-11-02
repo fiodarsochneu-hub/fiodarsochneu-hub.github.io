@@ -7,4 +7,4 @@ title: "Октябрь"
 ![Моё фото](october.jpg)
 <img width="2766" height="1562" alt="october" src="https://github.com/user-attachments/assets/2c2719a7-7e08-442e-ac21-fa72ea70a1f5" />
 _posts/october.jpg
-https://github.com/fiodarsochneu-hub/fiodarsochneu-hub.github.io/blob/c3cf970b23c829749829f12a789bb21534008f03/_posts/october.jpg
+![Моё фото](https://github.com/fiodarsochneu-hub/fiodarsochneu-hub.github.io/blob/c3cf970b23c829749829f12a789bb21534008f03/_posts/october.jpg)  
