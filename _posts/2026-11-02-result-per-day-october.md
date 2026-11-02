@@ -10,6 +10,6 @@ title: "Октябрь - итоги"
 На отдельной вкладке 
 <a href="/assets/october.jpg" target="_blank">Посмотреть фото</a>
 
-<div style="width: 50%;">
+<div style="width: 20%;">
   <a href="/assets/october.jpg" target="_blank">Посмотреть фото</a>
 </div>
