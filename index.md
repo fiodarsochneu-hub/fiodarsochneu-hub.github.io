@@ -11,17 +11,15 @@ title: Economy
   <!-- ========================================== -->
   <div style="flex: 3; min-width: 320px;">
     
-    <h2 style="margin-top: 0; color: #222;">КАК НАМ ОБУСТРОИТЬ ЭКОНОМИКУ — ретро</h2>
-    
-    <ul style="list-style-type: disc; padding-left: 20px; line-height: 1.6;">
-      <li><strong><a href="docs/how-arrange-our-economy.html">КАК РАЗРУШИТЬ ЭКОНОМИКУ?</a></strong>
-        <ul style="list-style-type: circle; padding-left: 20px;">
-          <li><a href="docs/thirteen-years-later.html">Тринадцать лет спустя</a></li>
-        </ul>
-      </li>
-      <li><strong><a href="docs/separate-clean-money-from-dirty-money.html">Разделить чистые и грязные деньги</a></strong></li>
-      <li><strong><a href="docs/how-to-organize-public-procurement.html">КАК ОБУСТРОИТЬ ГОСУДАРСТВЕННЫЕ ЗАКУПКИ</a></strong></li>
-    </ul>
+    ## [КАК НАМ ОБУСТРОИТЬ ЭКОНОМИКУ — ретро](docs/how-arrange-our-economy.html)
+
+    ### [КАК РАЗРУШИТЬ ЭКОНОМИКУ?](docs/how-to-destroy-an-economy.html)
+
+    #### [Тринадцать лет спустя](docs/thirteen-years-later.html)
+
+    ## [Разделить чистые и грязные деньги](docs/separate-clean-money-from-dirty-money.html)
+
+    ## [КАК ОБУСТРОИТЬ ГОСУДАРСТВЕННЫЕ ЗАКУПКИ](docs/how-to-organize-public-procurement.html)
 
     <blockquote style="margin: 20px 0; padding: 10px 20px; background: #f0f7ff; border-left: 5px solid #0066cc; font-style: italic; color: #444;">
       В государственных закупках ПРОЦЕДУРА — ничто, ЦЕНА и КАЧЕСТВО — всё.
