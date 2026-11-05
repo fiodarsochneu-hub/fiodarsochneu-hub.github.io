@@ -30,7 +30,10 @@ title: Economy
   
   {% assign skip_count = 0 %}
   {% assign current_month = "" %}
-  {% assign inside_ul = false %}
+  {% assign inside_details = false %}
+
+  {% comment %}Получаем текущий месяц и год в формате "MM.YYYY" на основе системного времени{% endcomment %}
+  {% capture real_current_month %}{{ "now" | date: "%m.%Y" }}{% endcapture %}
 
   {% for post in site.posts %}
     {% unless post.path contains "_posts/games/" %}
@@ -40,10 +43,11 @@ title: Economy
         {% comment %}Определяем месяц и год для текущей записи{% endcomment %}
         {% capture post_month %}{{ post.date | date: "%m.%Y" }}{% endcapture %}
         
-        {% comment %}Если месяц изменился, выводим название нового месяца{% endcomment %}
+        {% comment %}Если месяц изменился, закрываем предыдущий блок и создаем спойлер для нового месяца{% endcomment %}
         {% if post_month != current_month %}
-          {% if inside_ul %}
+          {% if inside_details %}
             </ul>
+            </details>
           {% endif %}
           
           {% comment %}Форматируем название месяца на русском языке{% endcomment %}
@@ -63,11 +67,19 @@ title: Economy
             {% when '12' %}{% assign month_name = 'Декабрь' %}
           {% endcase %}
           
-          <h4 style="margin-top: 15px; margin-bottom: 5px; color: #333;">📅 {{ month_name }} {{ post.date | date: "%Y" }} г.</h4>
-          <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
+          {% comment %}Проверяем, является ли месяц текущим. Если да — добавляем атрибут open{% endcomment %}
+          {% if post_month == real_current_month %}
+            {% assign open_attribute = "open" %}
+          {% else %}
+            {% assign open_attribute = "" %}
+          {% endif %}
+          
+          <details {{ open_attribute }} style="margin-left: 15px; margin-top: 10px; cursor: pointer;">
+            <summary style="font-weight: bold; color: #333333; margin-bottom: 5px;">📅 {{ month_name }} {{ post.date | date: "%Y" }} г.</summary>
+            <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
           
           {% assign current_month = post_month %}
-          {% assign inside_ul = true %}
+          {% assign inside_details = true %}
         {% endif %}
 
         <li style="margin-bottom: 5px;">
@@ -77,8 +89,9 @@ title: Economy
     {% endunless %}
   {% endfor %}
 
-  {% if inside_ul %}
+  {% if inside_details %}
     </ul>
+    </details>
   {% endif %}
 </details>
 {% endif %}
