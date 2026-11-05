@@ -3,13 +3,29 @@ layout: default
 title: Economy
 ---
 
+<!-- Специальный хак, который растягивает стандартный узкий контейнер темы GitHub Pages на широких экранах -->
+<style>
+  .wrapper {
+    max-width: 1200px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .page-content .wrapper {
+    max-width: 1200px !important;
+  }
+  main.page-content {
+    max-width: 1200px !important;
+    margin: 0 auto;
+  }
+</style>
+
 <!-- Основной контейнер Flexbox, разделяющий страницу на две колонки -->
-<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; width: 100%;">
 
   <!-- ========================================== -->
   <!-- ЛЕВАЯ КОЛОНКА: ЛЕНТА И ПУБЛИКАЦИИ (70%)    -->
   <!-- ========================================== -->
-  <div style="flex: 3; min-width: 320px;">
+  <div style="flex: 2.5; min-width: 320px; box-sizing: border-box;">
     
     ## [КАК НАМ ОБУСТРОИТЬ ЭКОНОМИКУ — ретро](docs/how-arrange-our-economy.html)
 
@@ -146,7 +162,7 @@ title: Economy
   <!-- ========================================== -->
   <!-- ПРАВАЯ КОЛОНКА: САЙДБАР (30%)              -->
   <!-- ========================================== -->
-  <div style="flex: 1; min-width: 260px; background: #fdfdfd; padding: 22px; border-radius: 8px; border: 1px solid #eef0f2; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+  <div style="flex: 1; min-width: 260px; background: #fdfdfd; padding: 22px; border-radius: 8px; border: 1px solid #eef0f2; box-shadow: 0 1px 3px rgba(0,0,0,0.02); box-sizing: border-box;">
     
     <!-- Визитка автора -->
     <div style="text-align: center; margin-bottom: 25px;">
@@ -192,3 +208,8 @@ title: Economy
   </div>
 
 </div>
+Используйте код с осторожностью.
+Пожалуйста, обновите код и проверьте отображение. Напишите:
+• Встал ли сайдбаре ровно справа теперь?
+• Появились ли какие-то сдвиги в шапке сайта (меню/логотип)?
+Если блоки распределились правильно, мы можем почистить или переоформить нижний подвал (футер), чтобы надписи GitHub Pages не перекрывали контент.
