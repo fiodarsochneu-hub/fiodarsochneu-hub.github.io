@@ -1,0 +1,335 @@
+---
+layout: default
+title: Мозг испытывал нервозность
+---
+package com.example.myenglishcards
+
+import android.content.Context
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    CardScreen()
+                }
+            }
+        }
+    }
+}
+
+data class WordCard(
+    val id: Int,
+    val english: String,
+    val translations: List<String>,
+    val transcription: String
+)
+
+@Composable
+fun CardScreen() {
+    val context = LocalContext.current
+    val sharedPreferences = remember { context.getSharedPreferences("Prefs", Context.MODE_PRIVATE) }
+    val initialWords = remember {
+        val learned = sharedPreferences.getStringSet("learned_ids", emptySet()) ?: emptySet()
+        val filtered = WordsDatabase.getTopWords().filter { it.id.toString() !in learned }
+        mutableStateListOf<WordCard>().apply { addAll(filtered.shuffled()) }
+    }
+    var currentIndex by remember { mutableStateOf(0) }
+    var isFlipped by remember { mutableStateOf(false) }
+
+    LaunchedEffect(currentIndex) { isFlipped = false }
+
+    val rotation by animateFloatAsState(
+        targetValue = if (isFlipped) 180f else 0f,
+        animationSpec = tween(350),
+        label = "Flip"
+    )
+
+    if (initialWords.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("🎉 Все слова выучены!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(onClick = {
+                    sharedPreferences.edit().remove("learned_ids").apply()
+                    initialWords.addAll(WordsDatabase.getTopWords().shuffled())
+                    currentIndex++
+                }) { Text("Начать заново") }
+            }
+        }
+        return
+    }
+
+    val currentCard = initialWords.firstOrNull()
+    if (currentCard != null) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 16.dp)) {
+                Text("Осталось карточек: ${initialWords.size}", fontSize = 16.sp)
+                val totalLearned = WordsDatabase.getTopWords().size - initialWords.size
+                Text("Выучено: $totalLearned из ${WordsDatabase.getTopWords().size}", fontSize = 14.sp, color = MaterialTheme.colorScheme.outline)
+            }
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    .aspectRatio(0.7f)
+                    .graphicsLayer { rotationY = rotation; cameraDistance = 12f * density }
+                    .clickable { isFlipped = !isFlipped },
+                elevation = CardDefaults.cardElevation(6.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            ) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    if (rotation <= 90f) {
+                        Text(currentCard.english, fontSize = 38.sp, fontWeight = FontWeight.Bold)
+                    } else {
+                        Column(
+                            modifier = Modifier
+                                .graphicsLayer { rotationY = 180f }
+                                .padding(24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = currentCard.transcription,
+                                fontSize = 24.sp,
+                                color = MaterialTheme.colorScheme.outline,
+                                textAlign = TextAlign.Center
+                            )
+
+                            Spacer(modifier = Modifier.height(28.dp))
+
+                            val annotatedTranslation = buildAnnotatedString {
+                                currentCard.translations.forEachIndexed { index, translation ->
+                                    when (index) {
+                                        0 -> {
+                                            withStyle(
+                                                style = SpanStyle(
+                                                    fontSize = 26.sp,
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    textDecoration = TextDecoration.combine(
+                                                        listOf(TextDecoration.Underline, TextDecoration.Underline)
+                                                    )
+                                                )
+                                            ) {
+                                                append(translation)
+                                            }
+                                        }
+                                        1 -> {
+                                            append("\n")
+                                            withStyle(style = SpanStyle(fontSize = 20.sp, fontWeight = FontWeight.Medium)) {
+                                                append(translation)
+                                            }
+                                        }
+                                        2 -> {
+                                            append("\n")
+                                            withStyle(style = SpanStyle(fontSize = 17.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f))) {
+                                                append(translation)
+                                            }
+                                        }
+                                        else -> {
+                                            append("\n")
+                                            withStyle(style = SpanStyle(fontSize = 15.sp, color = MaterialTheme.colorScheme.outline)) {
+                                                append(translation)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            Text(
+                                text = annotatedTranslation,
+                                textAlign = TextAlign.Center,
+                                lineHeight = 28.sp
+                            )
+                        }
+                    }
+                }
+            }
+
+            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Button(
+                    onClick = {
+                        if (initialWords.size > 1) {
+                            val word = initialWords.removeAt(0)
+                            val pos = if (initialWords.size >= 5) 5 else initialWords.size
+                            initialWords.add(pos, word)
+                        }
+                        currentIndex++
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                    modifier = Modifier.width(130.dp).height(50.dp)
+                ) { Text("Не знаю") }
+
+                Button(
+                    onClick = {
+                        val word = initialWords.removeAt(0)
+                        val learned = sharedPreferences.getStringSet("learned_ids", emptySet()) ?: emptySet()
+                        sharedPreferences.edit().putStringSet("learned_ids", learned.toMutableSet().apply { add(word.id.toString()) }).apply()
+                        currentIndex++
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                    modifier = Modifier.width(130.dp).height(50.dp)
+                ) { Text("Знаю") }
+            }
+        }
+    }
+}
+
+object WordsDatabase {
+    fun getTopWords(): List<WordCard> {
+        val rawCards = listOf(
+            // 1001 - 1010
+            RawCard(1001, "shoot", "стрелять, съемка, отстреливать, палить, охотиться, пускать ростки", "[ʃuːt]"),
+            RawCard(1002, "announce", "объявлять, заявлять, извещать, анонсировать, сообщать", "[əˈnaʊns]"),
+            RawCard(1003, "unless", "если не, пока не, разве только", "[ʌnˈles]"),
+            RawCard(1004, "independent", "независимый, самостоятельный, суверенный", "[ˌɪndɪˈpendənt]"),
+            RawCard(1005, "recommend", "рекомендовать, советовать, предлагать", "[ˌrekəˈmend]"),
+            RawCard(1006, "survey", "опрос, исследование, обзор, инспекция, анкетирование", "[ˈsɜːveɪ]"),
+            RawCard(1007, "majority", "большинство, совершеннолетие, мажоритарность", "[məˈdʒɒrəti]"),
+            RawCard(1008, "stick", "палка, придерживаться, втыкать, клеить, трость, протыкать", "[stɪk]"),
+            RawCard(1009, "request", "запрос, просьба, требование, ходатайство", "[rɪˈkwest]"),
+            RawCard(1010, "rich", "богатый, сочный, обильный, плодородный, ценный", "[rɪtʃ]"),
+// 1011 - 1020
+            RawCard(1011, "wind", "ветер, мотать, заводить, изгиб, виток", "[wɪnd]"),
+            RawCard(1012, "none", "ни один, никто, ничто, нисколько", "[nʌn]"),
+            RawCard(1013, "exchange", "обмен, обменивать, биржа, размен, замена", "[ɪksˈtʃeɪndʒ]"),
+            RawCard(1014, "budget", "бюджет, финансовый план, бюджетный, запасаться", "[ˈbʌdʒɪt]"),
+            RawCard(1015, "famous", "знаменитый, известный, прославленный, отличный", "[ˈfeɪməs]"),
+            RawCard(1016, "blood", "кровь, происхождение, родство, кровопролитие", "[blʌd]"),
+            RawCard(1017, "appropriate", "соответствующий, подходящий, присваивать", "[əˈprəʊpriət]"),
+            RawCard(1018, "block", "блок, блокировать, квартал, преграда, препятствие", "[blɒk]"),
+            RawCard(1019, "warm", "теплый, греть, согревать, тепло, ласковый", "[wɔːm]"),
+            RawCard(1020, "count", "считать, подсчет, граф, значение, полагаться", "[kaʊnt]"),
+// 1021 - 1030
+            RawCard(1021, "cross", "пересекать, крест, перекрестный, сердитый", "[krɒs]"),
+            RawCard(1022, "sea", "море, морской, океан, волна, множество", "[siː]"),
+            RawCard(1023, "reply", "отвечать, ответ, реплика, отклик", "[rɪˈplaɪ]"),
+            RawCard(1024, "software", "программное обеспечение, программы, софт", "[ˈsɒftweə]"),
+            RawCard(1025, "weight", "вес, масса, груз, значимость, нагружать", "[weɪt]"),
+            RawCard(1026, "shape", "форма, очертание, формировать, вид, облик", "[ʃeɪp]"),
+            RawCard(1027, "completely", "полностью, совершенно", "[kəmˈpliːtli]"),
+            RawCard(1028, "trial", "судебный процесс, испытание, пробный, попытка", "[ˈtraɪəl]"),
+            RawCard(1029, "weather", "погода, выветриваться, преодолевать", "[ˈweðə]"),
+            RawCard(1030, "administration", "администрация, управление, руководство", "[ədˌmɪnɪˈstreɪʃn]"),
+// 1031 - 1040
+            RawCard(1031, "fix", "чинить, исправлять, фиксировать, закреплять, дилемма", "[fɪks]"),
+            RawCard(1032, "judge", "судья, судить, оценивать, эксперт", "[dʒʌdʒ]"),
+            RawCard(1033, "absolutely", "абсолютно, совершенно, безусловно", "[ˌæbsəˈluːtli]"),
+            RawCard(1034, "user", "пользователь, потребитель", "[ˈjuːzə]"),
+            RawCard(1035, "welcome", "добро пожаловать, приветствовать, желанный", "[ˈwelkəm]"),
+            RawCard(1036, "element", "элемент, стихия, компонент, составная часть", "[ˈelɪmənt]"),
+            RawCard(1037, "requirement", "требование, условие, необходимость, потребность", "[rɪˈkwaɪəmənt]"),
+            RawCard(1038, "glass", "стекло, стакан, бокал, стеклянный, зеркало", "[ɡlɑːs]"),
+            RawCard(1039, "laughter", "смех, хохот, веселье", "[ˈlɑːftə]"),
+            RawCard(1040, "difficulty", "трудность, сложность, препятствие, затруднение", "[ˈdɪfɪkəlti]"),
+// 1041 - 1050
+            RawCard(1041, "effective", "эффективный, действенный, результативный", "[ɪˈfektɪv]"),
+            RawCard(1042, "invest", "инвестировать, вкладывать, инвестиционный", "[ɪnˈvest]"),
+            RawCard(1043, "primary", "первичный, основной, главный, начальный", "[ˈpraɪməri]"),
+            RawCard(1044, "generation", "поколение, генерация, выработка, создание", "[ˌdʒenəˈreɪʃn]"),
+            RawCard(1045, "federal", "федеральный, союзный", "[ˈfedərəl]"),
+            RawCard(1046, "replace", "заменять, замещать, восстанавливать, возвращать", "[rɪˈpleɪ]"),
+            RawCard(1047, "writer", "писатель, автор, публицист", "[ˈraɪtə]"),
+            RawCard(1048, "frequently", "часто, многократно, постоянно", "[ˈfriːkwəntli]"),
+            RawCard(1049, "expert", "эксперт, специалист, знаток, опытный", "[ˈekspɜːt]"),
+            RawCard(1050, "heavy", "тяжелый, массивный, сильный, интенсивный", "[ˈhevi]"),
+// 1051 - 1060
+            RawCard(1051, "find", "находить, находка, обнаружить, встречать, открывать", "[faɪnd]"),
+            RawCard(1052, "twice", "дважды, вдвое, повторно", "[twaɪs]"),
+            RawCard(1053, "fresh", "свежий, чистый, новенький, дерзкий", "[freʃ]"),
+            RawCard(1054, "somewhere", "где-то, куда-то, приблизительно", "[ˈsʌmweə]"),
+            RawCard(1055, "consumer", "потребитель, покупатель, потребительский", "[kənˈsjuːmə]"),
+            RawCard(1056, "thick", "толстый, густой, плотный, чаща, глупый", "[θɪk]"),
+            RawCard(1057, "chief", "главный, начальник, вождь, руководитель", "[tʃiːf]"),
+            RawCard(1058, "surface", "поверхность, поверхностный, всплывать", "[ˈsɜːfɪs]"),
+            RawCard(1059, "beauty", "красота, красавица, прелесть", "[ˈbjuːti]"),
+            RawCard(1060, "progress", "прогресс, развиваться, продвижение, успех", "[ˈprəʊɡres]"),
+// 1061 - 1070
+            RawCard(1061, "critic", "критик, искусствовед, рецензент", "[ˈkrɪtɪk]"),
+            RawCard(1062, "spirit", "дух, душа, настроение, алкоголь, воодушевлять", "[ˈspɪrɪt]"),
+            RawCard(1063, "guest", "гость, постоялец, приглашенный", "[ɡest]"),
+            RawCard(1064, "promise", "обещать, обещание, перспектива, сулить", "[ˈprɒmɪs]"),
+            RawCard(1065, "decrease", "уменьшать, снижаться, спад, убывание", "[dɪˈkriːs]"),
+            RawCard(1066, "screen", "экран, экранировать, ширма, заслон, сортировать", "[skriːn]"),
+            RawCard(1067, "cultural", "культурный, просветительный", "[ˈkʌltʃərəl]"),
+            RawCard(1068, "forum", "форум, площадь, судилище", "[ˈfɔːrəm]"),
+            RawCard(1069, "abandon", "покидать, оставлять, отказываться, разнузданность", "[əˈbændən]"),
+            RawCard(1070, "inside", "внутри, внутренний, изнанка, секретная информация", "[ˌɪnˈsaɪd]"),
+// 1071 - 1080
+            RawCard(1071, "beauty", "красота, прелесть, красавица", "[ˈbjuːti]"),
+            RawCard(1072, "danger", "опасность, угроза", "[ˈdeɪndʒə]"),
+            RawCard(1073, "strike", "бастовать, бить, удар, забастовка, поражать", "[straɪk]"),
+            RawCard(1074, "criticism", "критика, осуждение, критический разбор", "[ˈkrɪtɪsɪzəm]"),
+            RawCard(1075, "sweet", "сладкий, конфета, милый, сладость", "[swiːt]"),
+            RawCard(1076, "plastic", "пластик, пластмассовый, гибкий, пластичный", "[ˈplæstɪk]"),
+            RawCard(1077, "agricultural", "сельскохозяйственный, аграрный", "[ˌæɡrɪˈkʌltʃərəl]"),
+            RawCard(1078, "session", "сессия, заседание, собрание, период времени", "[ˈseʃn]"),
+            RawCard(1079, "lean", "наклоняться, опираться, постный, тощий", "[liːn]"),
+            RawCard(1080, "praise", "хвалить, похвала, восхваление", "[preɪz]"),
+// 1081 - 1090
+            RawCard(1081, "metal", "металл, металлический, щебень", "[ˈmetl]"),
+            RawCard(1082, "row", "ряд, грести, ссора, скандал, кататься на лодке", "[rəʊ]"),
+            RawCard(1083, "regulate", "регулировать, упонядочивать, настраивать", "[ˈreɡjuleɪt]"),
+            RawCard(1084, "cash", "наличные деньги, касса, обналичивать", "[kæʃ]"),
+            RawCard(1085, "intend", "намереваться, планировать, предназначать", "[ɪnˈtend]"),
+            RawCard(1086, "brain", "мозг, интеллект, умник, поражать в голову", "[breɪn]"),
+            RawCard(1087, "hide", "прятать, прятаться, шкура, убежище", "[haɪd]"),
+            RawCard(1088, "degree", "градус, степень, звание, диплом", "[dɪˈɡriː]"),
+            RawCard(1089, "narrow", "узкий, сужать, ограниченный, теснина", "[ˈnærəʊ]"),
+            RawCard(1090, "theatre", "театр, зрелище, театральное искусство", "[ˈθɪətə]"),
+// 1091 - 1100
+            RawCard(1091, "solve", "решать (проблему/задачу), находить выход, растворять", "[sɒlv]"),
+            RawCard(1092, "slowly", "медленно, не торопясь", "[ˈsləʊli]"),
+            RawCard(1093, "concept", "концепция, понятие, идея, общее представление", "[ˈkɒnsept]"),
+            RawCard(1094, "somewhat", "в некоторой степени, слегка, отчасти", "[ˈsʌmwɒt]"),
+            RawCard(1095, "inform", "информировать, сообщать, уведомлять", "[ɪnˈfɔːm]"),
+            RawCard(1096, "scientific", "научный", "[ˌsaɪənˈtɪfɪk]"),
+            RawCard(1097, "buyer", "покупатель, заказчик, байер", "[ˈbaɪə]"),
+            RawCard(1098, "vessel", "судно, корабль, сосуд, резервуар", "[ˈvesl]"),
+            RawCard(1099, "suit", "костюм, подходить (по стилю), иск, удовлетворять", "[suːt]"),
+            RawCard(1100, "investing", "инвестирование, вложение денег", "[ɪnˈvestɪŋ]")
+        )
+        return rawCards.map { card ->
+            val cleanedTranslations = parseTextToList(card.russianText)
+            WordCard(card.id, card.english, cleanedTranslations, card.transcription)
+        }
+    }
+    private fun parseTextToList(text: String): List<String> {
+        return text.split(Regex("[,/();]+"))
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+    }
+    private data class RawCard(
+        val id: Int,
+        val english: String,
+        val russianText: String,
+        val transcription: String
+    )
+}
+
