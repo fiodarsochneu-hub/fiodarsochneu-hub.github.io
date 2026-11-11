@@ -1,3 +1,8 @@
+---
+layout: default
+title: Мозг испытывал нервозность
+---
+
 package com.example.myenglishcards
 
 import android.content.Context
