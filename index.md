@@ -138,9 +138,9 @@ title: Economy
         {% assign open_attribute = "" %}
       {% endif %}
       
-      <details {{ open_attribute }} style="margin-left: 15px; margin-top: 10px; cursor: pointer;">
-        <summary style="font-weight: bold; color: #333333; margin-bottom: 5px;">📅 {{ month_name }} {{ post.date | date: "%Y" }} г.</summary>
-        <ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
+<details {{ open_attribute }} style="margin-left: 15px; margin-top: 10px; cursor: pointer;">
+<summary style="font-weight: bold; color: #333333; margin-bottom: 5px;">📅 {{ month_name }} {{ post.date | date: "%Y" }} г.</summary>
+<ul style="list-style-type: disc; padding-left: 20px; margin-top: 5px;">
       
       {% assign current_month = post_month %}
       {% assign inside_details = true %}
@@ -154,7 +154,7 @@ title: Economy
 
 {% if inside_details %}
   </ul>
-  </details>
+</details>
 {% endif %}
 
 {% if has_economy == false %}
