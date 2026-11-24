@@ -19,7 +19,7 @@ title: Economy
 
 {% assign count = 0 %}
 {% for post in site.posts %}
-  {% unless post.path contains "_posts/games/" or post.path contains "_posts/economy/" %}
+  {% unless post.path contains "_posts/other-topics/" or post.path contains "_posts/economy/" %}
 * **{{ post.date | date: "%d.%m.%Y" }}** — [{{ post.title }}]({{ post.url | relative_url }})
   {{ post.excerpt }}
     {% assign count = count | plus: 1 %}
@@ -43,7 +43,7 @@ title: Economy
   {% assign inside_details = false %}
 
   {% for post in site.posts %}
-    {% unless post.path contains "_posts/games/" or post.path contains "_posts/economy/" %}
+    {% unless post.path contains "_posts/other-topics/" or post.path contains "_posts/economy/" %}
       {% assign skip_count = skip_count | plus: 1 %}
       
       {% if skip_count > 3 %}
@@ -168,7 +168,7 @@ title: Economy
 {% assign inside_details = false %}
 
 {% for post in site.posts %}
-  {% if post.path contains "_posts/games/" %}
+  {% if post.path contains "_posts/other-topics/" %}
     {% assign has_games = true %}
     {% capture post_month %}{{ post.date | date: "%m.%Y" }}{% endcapture %}
     
