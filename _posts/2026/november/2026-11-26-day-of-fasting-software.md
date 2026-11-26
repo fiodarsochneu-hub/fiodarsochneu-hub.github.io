@@ -2,7 +2,6 @@
 layout: default
 title: Переделывал приложение My English Cards
 ---
-2026-11-26-day-of-fasting-software
 
 Голодаем. Надоело читать, смотреть в экран монитора.
 
